@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Садиба Гереджука · Ворохта</title>
-<meta name="description" content="Садиба у Ворохті біля Пруту: номери для двох і для родини, окремий будинок на 8 гостей, альтанки з мангалом. Бронювання напряму у Viber чи Telegram.">
+<meta name="description" content="Садиба у Ворохті біля Пруту: номери для двох і для родини, окремий будинок на 8 гостей, альтанки з мангалом. Бронювання напряму у Viber або телефоном.">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#173A31">
 <meta property="og:type" content="website">
@@ -487,6 +487,9 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
 .seg span .i{width:18px;height:18px}
 .seg input:checked + span{background:var(--spruce);border-color:var(--spruce);color:var(--on-dark)}
 .seg input:focus-visible + span{outline:2px solid var(--roof);outline-offset:2px}
+.seg--how .seg__row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.seg--how label{display:flex;min-width:0}
+.seg--how span{flex:1 1 auto;justify-content:center;min-width:0}
 .form__err{font:700 13.5px/1.35 var(--f-sans);color:#A3261C}
 .form__err:empty{display:none}
 .form__fine{font-size:13px;text-align:center;color:var(--note)}
@@ -681,6 +684,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
   <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5.5 3.5h3l1.8 4.6-2.3 1.4a11.5 11.5 0 0 0 6.5 6.5l1.4-2.3 4.6 1.8v3a2 2 0 0 1-2.2 2A17 17 0 0 1 3.5 5.7a2 2 0 0 1 2-2.2z"/></symbol>
   <symbol id="i-viber" viewBox="0 0 24 24"><path d="M12 2.9c5 0 8.5 2.6 8.5 7.6s-3.4 7.7-8.5 7.7c-.8 0-1.6 0-2.3-.2l-3.4 2.8v-3.5c-1.9-1.3-2.8-3.6-2.8-6.8 0-5 3.5-7.6 8.5-7.6z"/><path d="M9.9 7.3c.4-.3.9-.3 1.2.1l.6.9c.3.4.2.9-.2 1.2l-.3.3c.4.8 1 1.5 1.9 1.9l.3-.4c.3-.4.8-.4 1.2-.2l.9.6c.4.3.4.8.1 1.2l-.5.5c-.6.6-1.5.6-2.3.2a8 8 0 0 1-3.2-3.2c-.4-.8-.4-1.7.2-2.3z"/></symbol>
   <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 3 10.5l6.5 2.5L12 21l3.5-5.5M9.5 13 21 3"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.85L3.5 20.5l4.3-1.1A8.5 8.5 0 1 0 12 3.5z"/><path d="M9.9 9.2c.4-.3.9-.3 1.2.1l.6.9c.3.4.2.9-.2 1.2l-.3.3c.4.8 1 1.5 1.9 1.9l.3-.4c.3-.4.8-.4 1.2-.2l.9.6c.4.3.4.8.1 1.2l-.5.5c-.6.6-1.5.6-2.3.2a8 8 0 0 1-3.2-3.2c-.4-.8-.4-1.7.2-2.3z"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.1-7-11.4a7 7 0 0 1 14 0C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.6" r="2.6"/></symbol>
@@ -811,7 +815,6 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       </dl>
       <div class="intro__cta">
         <a class="btn btn--primary" href="viber://chat?number=%2B380977886545"><svg class="i" aria-hidden="true"><use href="#i-viber"/></svg>Написати у Viber</a>
-        <a class="btn btn--ghost" href="https://t.me/+380977886545" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Telegram</a>
         <a class="btn btn--ghost" href="tel:+380977886545"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Подзвонити</a>
       </div>
       <p class="intro__note">Відповідає господиня, Марічка. Ціну на ваші дати підтвердимо у Viber.</p>
@@ -1081,18 +1084,17 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
   <div class="wrap reserve__grid">
     <div data-rv>
       <p class="eyebrow">Бронювання напряму</p>
-      <h2 id="book-title">Оберіть дати, <em>відповімо у Viber чи Telegram</em></h2>
+      <h2 id="book-title">Оберіть дати, <em>відповімо, як вам зручно</em></h2>
       <p class="lead">Заявка одразу прийде господині. Про трансфер, дітей чи пізній приїзд напишіть у коментарі.</p>
       <ol class="steps">
         <li><p>Оберіть номер і вільні дати в календарі.</p></li>
-        <li><p>Господиня напише вам у Viber чи Telegram і назве ціну на ці дати.</p></li>
+        <li><p>Господиня подзвонить або напише вам і назве ціну на ці дати.</p></li>
         <li><p>Приїжджайте: паркування на подвір’ї, вас зустрінуть і все покажуть.</p></li>
       </ol>
       <div class="contact">
         <a class="contact__phone" href="tel:+380977886545"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>+380 97 788 65 45</a>
         <div class="contact__btns">
           <a class="btn btn--primary" href="viber://chat?number=%2B380977886545"><svg class="i" aria-hidden="true"><use href="#i-viber"/></svg>Viber</a>
-          <a class="btn btn--ghost" href="https://t.me/+380977886545" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Telegram</a>
         </div>
         <p><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span>Заселення з 13:00, виїзд до 11:00</span></p>
         <p><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span>вул. Лесі Українки, 15, Ворохта</span></p>
@@ -1145,22 +1147,21 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
           <input type="hidden" name="checkout" id="fOut">
         </div>
         <label class="check"><input type="checkbox" name="transfer" id="fTransfer"><span>Потрібен трансфер<small>Від вокзалу чи до Говерли, оплачується окремо. Господиня скаже ціну.</small></span></label>
-        <div class="row2">
-          <label class="fld"><span class="lbl">Ім’я</span><input class="inp" type="text" name="name" id="fName" autocomplete="name" required placeholder="Як до вас звертатися"></label>
-          <label class="fld"><span class="lbl">Телефон</span><input class="inp" type="tel" name="phone" id="fPhone" autocomplete="tel" inputmode="tel" required placeholder="+380"></label>
-        </div>
-        <fieldset class="seg">
-          <legend>Де вам відповісти</legend>
+        <label class="fld"><span class="lbl">Ім’я</span><input class="inp" type="text" name="name" id="fName" autocomplete="name" required placeholder="Як до вас звертатися"></label>
+        <fieldset class="seg seg--how">
+          <legend>Як з вами зв’язатися?</legend>
           <div class="seg__row">
-            <label><input type="radio" name="msgr" value="Viber" checked><span><svg class="i" aria-hidden="true"><use href="#i-viber"/></svg>Viber</span></label>
-            <label><input type="radio" name="msgr" value="Telegram"><span><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Telegram</span></label>
-            <label><input type="radio" name="msgr" value="Дзвінок"><span><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Дзвінок</span></label>
+            <label><input type="radio" name="how" value="Дзвінок"><span><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Дзвінок</span></label>
+            <label><input type="radio" name="how" value="Viber" checked><span><svg class="i" aria-hidden="true"><use href="#i-viber"/></svg>Viber</span></label>
+            <label><input type="radio" name="how" value="Telegram"><span><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Telegram</span></label>
+            <label><input type="radio" name="how" value="WhatsApp"><span><svg class="i" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</span></label>
           </div>
         </fieldset>
+        <label class="fld"><span class="lbl" id="fContactLbl">Номер у Viber</span><input class="inp" type="text" name="contact" id="fContact" autocomplete="tel" inputmode="tel" required placeholder="+380"></label>
         <label class="fld"><span class="lbl">Коментар, якщо потрібно</span><textarea class="inp" name="comment" id="fComment" rows="3" placeholder="Час приїзду, діти, побажання"></textarea></label>
         <p class="form__err" id="fErr" role="alert" aria-live="assertive"></p>
         <button class="btn btn--primary" type="submit" id="fSubmit" disabled>Надіслати заявку <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        <p class="form__fine">Номер телефону потрібен лише для відповіді на заявку.</p>
+        <p class="form__fine">Ваш контакт потрібен лише для відповіді на заявку.</p>
       </form>
       <div class="done" id="done" hidden>
         <p class="done__tag"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Прототип</p>
@@ -1168,7 +1169,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
         <p>Це демо, тож заявку нікуди не надіслано. У робочій версії сайт перед відправкою ще раз перевірить, чи дати досі вільні, і заявка одразу прийде вам.</p>
         <p class="bubble__h"><svg class="i" aria-hidden="true"><use href="#i-viber"/></svg>Viber</p>
         <div class="bubble" id="bubble"></div>
-        <p class="pnote" role="note"><svg class="i" aria-hidden="true"><use href="#i-viber"/></svg><span>Далі ви відповідаєте гостю у Viber і називаєте ціну на ці дати.</span></p>
+        <p class="pnote" role="note"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg><span id="doneNext">Далі ви зв’язуєтеся з гостем так, як він попросив, і називаєте ціну на ці дати.</span></p>
         <button class="btn btn--ghost" type="button" id="doneBack">Змінити заявку</button>
       </div>
     </div>
@@ -1224,10 +1225,10 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       <p class="eyebrow">Питання</p>
       <h2 id="faq-title">Що питають <em>перед приїздом</em></h2>
       <div class="faq__ask">
-        <p>Не знайшли відповіді? Напишіть, відповімо в месенджері.</p>
+        <p>Не знайшли відповіді? Напишіть у Viber або подзвоніть.</p>
         <div class="btns">
           <a class="btn btn--primary" href="viber://chat?number=%2B380977886545"><svg class="i" aria-hidden="true"><use href="#i-viber"/></svg>Viber</a>
-          <a class="btn btn--ghost" href="https://t.me/+380977886545" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Telegram</a>
+          <a class="btn btn--ghost" href="tel:+380977886545"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Подзвонити</a>
         </div>
       </div>
       <img class="faq__cone" src="decor/cone-angle.webp" width="400" height="224" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -1289,7 +1290,6 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
         <p class="foot__t">Написати</p>
         <ul>
           <li><a href="viber://chat?number=%2B380977886545">Viber</a></li>
-          <li><a href="https://t.me/+380977886545" target="_blank" rel="noopener">Telegram</a></li>
           <li><a href="tel:+380977886545">Подзвонити</a></li>
         </ul>
       </div>
@@ -1312,7 +1312,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
 </footer>
 
 <div class="mbar" id="mbar">
-  <div class="mbar__txt"><b>Бронювання напряму</b><small>Viber, Telegram або дзвінок</small></div>
+  <div class="mbar__txt"><b>Бронювання напряму</b><small>Viber або дзвінок</small></div>
   <a class="mbar__call" href="tel:+380977886545" aria-label="Подзвонити: +380 97 788 65 45"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></a>
   <a class="btn btn--primary" href="viber://chat?number=%2B380977886545"><svg class="i" aria-hidden="true"><use href="#i-viber"/></svg>Viber</a>
 </div>
@@ -1522,7 +1522,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
     var f = d.getElementById('bookForm');
     var fin = d.getElementById('fIn'), fout = d.getElementById('fOut'), g = d.getElementById('fGuests');
     var trf = d.getElementById('fTransfer');
-    var nm = d.getElementById('fName'), ph = d.getElementById('fPhone'), cm = d.getElementById('fComment');
+    var nm = d.getElementById('fName'), ct = d.getElementById('fContact'), ctLbl = d.getElementById('fContactLbl'), cm = d.getElementById('fComment');
     var err = d.getElementById('fErr'), done = d.getElementById('done'), bubble = d.getElementById('bubble');
     var submit = d.getElementById('fSubmit');
     var cal = d.getElementById('cal'), sumEl = d.getElementById('calSum'), resetBtn = d.getElementById('calReset');
@@ -2018,7 +2018,33 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
         if (r) { try { r.focus({ preventScroll: true }); } catch (x) {} }
       });
     });
-    [nm, ph].forEach(function(el){ el.addEventListener('input', function(){ el.removeAttribute('aria-invalid'); }); });
+    [nm, ct].forEach(function(el){ el.addEventListener('input', function(){ el.removeAttribute('aria-invalid'); }); });
+    /* як з вами зв’язатися: підпис і клавіатура поля залежать від способу */
+    var HOW = {
+      'Дзвінок': { lbl: 'Номер телефону', ph: '+380', mode: 'tel', err: 'Вкажіть номер телефону, щоб господиня могла подзвонити.', next: 'Далі ви дзвоните гостю і називаєте ціну на ці дати.' },
+      'Viber': { lbl: 'Номер у Viber', ph: '+380', mode: 'tel', err: 'Вкажіть номер у Viber, щоб господиня могла написати.', next: 'Далі ви пишете гостю у Viber і називаєте ціну на ці дати.' },
+      'Telegram': { lbl: 'Нік або номер у Telegram', ph: '@нік або +380', mode: 'text', err: 'Вкажіть нік або номер у Telegram, щоб господиня могла написати.', next: 'Далі ви пишете гостю в Telegram і називаєте ціну на ці дати.' },
+      'WhatsApp': { lbl: 'Номер у WhatsApp', ph: '+380', mode: 'tel', err: 'Вкажіть номер у WhatsApp, щоб господиня могла написати.', next: 'Далі ви пишете гостю у WhatsApp і називаєте ціну на ці дати.' }
+    };
+    function howVal(){ var m = f.querySelector('input[name="how"]:checked'); return m && HOW[m.value] ? m.value : 'Viber'; }
+    function syncHow(){
+      var h = HOW[howVal()];
+      ctLbl.textContent = h.lbl;
+      ct.placeholder = h.ph;
+      ct.setAttribute('inputmode', h.mode);
+    }
+    function contactVal(){
+      var v = ct.value.trim();
+      if (howVal() === 'Telegram' && /^@?[A-Za-z][A-Za-z0-9_]{4,31}$/.test(v)) return v.charAt(0) === '@' ? v : '@' + v;
+      return v.replace(/\D/g, '').length >= 9 ? v : '';
+    }
+    [].forEach.call(f.querySelectorAll('input[name="how"]'), function(r){
+      r.addEventListener('change', function(){
+        syncHow();
+        if (ct.getAttribute('aria-invalid')) { ct.removeAttribute('aria-invalid'); err.textContent = ''; }
+      });
+    });
+    syncHow();
 
     function fail(bad, msg, showInCal){
       err.textContent = msg;
@@ -2032,7 +2058,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       } else { bad.setAttribute('aria-invalid', 'true'); bad.focus(); }
     }
     function showDone(){
-      var v = roomVal(), n = Math.round((selB - selA) / 864e5), m = f.querySelector('input[name="msgr"]:checked');
+      var v = roomVal(), n = Math.round((selB - selA) / 864e5), how = howVal();
       var roomLine = v === 'any'
         ? 'Номер: будь-який вільний (на ці дати вільні: ' + freeRooms(v, selA, selB).map(function(k){ return ROOMS[k].full; }).join('; ') + ')'
         : 'Номер: ' + ROOMS[v].full;
@@ -2044,11 +2070,12 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
         'Гостей: ' + guests(),
         'Трансфер: ' + (trf.checked ? 'потрібен' : 'не потрібен'),
         'Ім’я: ' + nm.value.trim(),
-        'Телефон: ' + ph.value.trim(),
-        'Відповісти: ' + (m ? m.value : 'Viber')
+        'Як зв’язатися: ' + how,
+        'Контакт: ' + contactVal()
       ];
       if (cm.value.trim()) lines.push('Коментар: ' + cm.value.trim());
       bubble.textContent = lines.join('\n');
+      d.getElementById('doneNext').textContent = HOW[how].next;
       f.hidden = true;
       done.hidden = false;
       d.getElementById('doneTitle').focus();
@@ -2057,14 +2084,14 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
     f.addEventListener('submit', function(e){
       e.preventDefault();
       if (checking) return;
-      [nm, ph].forEach(function(el){ el.removeAttribute('aria-invalid'); });
+      [nm, ct].forEach(function(el){ el.removeAttribute('aria-invalid'); });
       cal.classList.remove('is-invalid');
-      var v = roomVal(), digits = ph.value.replace(/\D/g, '');
+      var v = roomVal();
       if (!selA) return fail(cal, 'Оберіть дату заїзду в календарі.');
       if (!selB) return fail(cal, 'Оберіть дату виїзду в календарі.');
       if (!freeRooms(v, selA, selB).length) { selA = selB = null; syncHidden(); return fail(cal, 'Ці дати вже зайняті. Оберіть, будь ласка, інші.', true); }
       if (!nm.value.trim()) return fail(nm, 'Вкажіть, як до вас звертатися.');
-      if (digits.length < 9) return fail(ph, 'Вкажіть телефон, щоб господиня могла відповісти.');
+      if (!contactVal()) return fail(ct, HOW[howVal()].err);
       err.textContent = ''; dateErr = false;
       /* як на робочому сайті: перед відправкою ще раз звіряємо дати з календарем */
       checking = true;
