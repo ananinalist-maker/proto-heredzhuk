@@ -88,6 +88,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:72px
 @media (prefers-reduced-motion:no-preference){ html{scroll-behavior:smooth} }
 body{margin:0;background:var(--mist);color:var(--ink);font:400 16.5px/1.62 var(--f-sans);overflow-x:hidden;overflow-x:clip;-webkit-font-smoothing:antialiased}
 @media (min-width:1100px){ body{font-size:17px} }
+body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;background:url(decor/grain-256.png);opacity:.5}
 ::selection{background:var(--honey);color:var(--honey-ink)}
 img,video{display:block;max-width:100%}
 img{height:auto}
@@ -108,7 +109,10 @@ p{text-wrap:pretty}
 
 .wrap{position:relative;width:100%;max-width:1240px;margin-inline:auto;padding-inline:var(--gutter)}
 .section{position:relative;padding-block:var(--section)}
-.tone-dark{position:relative;isolation:isolate;background:radial-gradient(ellipse 80% 60% at 85% 0%,rgba(227,163,63,.10),rgba(227,163,63,0) 60%),var(--spruce);color:var(--on-dark)}
+/* декор по краях не має розширювати сторінку: обрізаємо лише по горизонталі */
+.section{overflow-x:clip}
+@supports not (overflow:clip){ .section{overflow:hidden} }
+.tone-dark{position:relative;isolation:isolate;background:var(--spruce);color:var(--on-dark)}
 .tone-meadow{background:var(--meadow)}
 
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font:800 12px/1.3 var(--f-sans);letter-spacing:.18em;text-transform:uppercase;color:var(--roof)}
@@ -234,7 +238,8 @@ button.qb__f{cursor:pointer;transition:background-color .15s}
 }
 
 /* про садибу: фото будинків, чотири факти і месенджери */
-.intro{background:var(--paper);border-bottom:1px solid var(--seam)}
+.intro{background:var(--paper)}
+.intro__phw{position:relative}
 .intro__grid{display:grid;gap:28px}
 @media (min-width:960px){ .intro__grid{grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:56px;align-items:center} }
 .intro__ph{position:relative;aspect-ratio:3/2;border-radius:var(--r);overflow:hidden;background:var(--meadow);box-shadow:var(--shadow)}
@@ -343,13 +348,22 @@ button.qb__f{cursor:pointer;transition:background-color .15s}
 
 /* гори поруч */
 .peaks__fig{position:relative;border-radius:var(--r);overflow:hidden;background:#cfd2cc;box-shadow:var(--shadow)}
-.peaks__fig img{width:100%;height:clamp(420px,62vw,640px);object-fit:cover;object-position:50% 58%}
-.peaks__txt{position:absolute;left:0;right:0;top:0;padding:clamp(22px,3.4vw,52px) clamp(20px,4vw,56px)}
+.peaks__fig img{width:100%;height:clamp(420px,62vw,640px);object-fit:cover;object-position:50% 34%}
+.peaks__fig::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(238,241,234,.82) 0%,rgba(238,241,234,.42) 24%,rgba(238,241,234,0) 44%)}
+.peaks__txt{position:absolute;z-index:2;left:0;right:0;top:0;padding:clamp(22px,3.4vw,52px) clamp(20px,4vw,56px)}
+@media (min-width:760px){ .peaks__txt{left:auto;max-width:62%;text-align:right} .peaks__txt h2{margin-left:auto} }
 .peaks__txt h2{max-width:14em;color:var(--spruce)}
 .peaks__txt h2 em{color:var(--honey-deep)}
 .peaks__txt .eyebrow{color:var(--spruce)}
-.peaks__fig figcaption{position:absolute;right:14px;bottom:12px;font:600 12px/1.3 var(--f-sans);color:rgba(238,241,234,.9);text-shadow:0 1px 6px rgba(0,0,0,.6)}
-@media (max-width:640px){ .peaks__fig img{height:auto;aspect-ratio:3/4;object-position:48% 50%} }
+.peaks__fig figcaption{position:absolute;z-index:2;right:14px;bottom:12px;font:600 12px/1.3 var(--f-sans);color:rgba(246,244,234,.94);text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.peaks__fig figcaption a{color:inherit;text-decoration:underline;text-decoration-color:rgba(246,244,234,.45);text-underline-offset:2px}
+@media (max-width:640px){
+  /* на телефоні заголовок над фото, щоб не лягав на вершину */
+  .peaks__fig{display:flex;flex-direction:column;overflow:visible;border-radius:0;background:none;box-shadow:none}
+  .peaks__fig::before{display:none}
+  .peaks__txt{position:static;order:-1;padding:0 0 18px}
+  .peaks__fig img{height:auto;aspect-ratio:4/3;object-position:50% 50%;border-radius:var(--r);box-shadow:var(--shadow)}
+}
 .peaks__grid{display:grid;gap:28px;margin-top:clamp(28px,3.5vw,48px)}
 @media (min-width:1024px){ .peaks__grid{grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:56px;align-items:start} }
 .peaks__grid .lead{margin-top:0}
@@ -361,6 +375,31 @@ button.qb__f{cursor:pointer;transition:background-color .15s}
 .quote-s p{font:italic 500 23px/1.3 var(--f-serif)}
 .quote-s footer{margin-top:10px;font-size:13.5px;color:var(--note)}
 .quote-s footer b{color:var(--ink)}
+
+/* карпатський декор: текстура, силуети гір і ялин між блоками, шишки й гілочки по краях */
+.edge{position:absolute;left:0;bottom:-1px;z-index:1;display:block;width:100%;height:clamp(44px,7.5vw,112px);pointer-events:none;fill:currentColor}
+.edge--mist{color:var(--mist)}
+.edge--spruce{color:var(--spruce)}
+.edge--meadow{color:var(--meadow)}
+.edge--night{color:var(--night)}
+.has-edge{padding-bottom:calc(var(--section) + clamp(26px,5vw,80px))}
+.decor{position:absolute;z-index:2;display:block;height:auto;max-width:none;pointer-events:none;-webkit-user-select:none;user-select:none;filter:drop-shadow(0 10px 14px rgba(14,35,30,.28))}
+.decor--hang{top:-36px;right:-28px;width:clamp(118px,19vw,290px);transform:rotate(-10deg)}
+@media (min-width:1024px){ .decor--hang{top:-60px;right:-44px} .rooms .head{padding-right:clamp(0px,24vw - 60px,300px)} }
+.decor--cone{right:-8px;bottom:-30px;width:clamp(60px,7vw,108px);transform:rotate(26deg)}
+@media (min-width:960px){ .decor--cone{right:-34px;bottom:-42px} }
+.decor--ground{left:max(4px,calc((100% - 1240px) / 2 - 4px));bottom:clamp(8px,1.8vw,24px);width:clamp(92px,11vw,176px);transform:rotate(-7deg)}
+.decor--ground2{left:calc(max(4px,calc((100% - 1240px) / 2 - 4px)) + clamp(78px,9vw,146px));bottom:clamp(4px,1.2vw,16px);width:clamp(70px,8vw,130px);transform:rotate(12deg)}
+.decor--rest{right:max(8px,calc((100% - 1240px) / 2 + 8px));bottom:clamp(10px,2vw,30px);width:clamp(86px,10vw,160px);transform:rotate(-12deg)}
+.decor--bird,.decor--sprig{display:none}
+@media (min-width:1200px){
+  .decor--bird{display:block;right:max(var(--gutter),calc((100% - 1240px) / 2 + var(--gutter)));top:calc(var(--section) - 10px);width:200px;filter:none}
+  .reviews .head{max-width:min(760px,100% - 240px)}
+}
+@media (min-width:1100px){ .decor--sprig{display:block;top:-146px;right:-18px;width:130px;transform:rotate(16deg)} }
+.faq__cone{display:none}
+@media (min-width:1024px){ .faq__cone{display:block;width:120px;height:auto;margin:44px 0 0 30px;transform:rotate(-20deg);filter:drop-shadow(0 10px 14px rgba(14,35,30,.28));pointer-events:none;-webkit-user-select:none;user-select:none} }
+.way{position:relative}
 
 /* фото */
 .gal{columns:2 150px;column-gap:8px}
@@ -680,6 +719,8 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
   <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></symbol>
   <symbol id="i-pause" viewBox="0 0 14 14"><rect x="2" y="1" width="3" height="12" rx=".6"/><rect x="9" y="1" width="3" height="12" rx=".6"/></symbol>
   <symbol id="i-play" viewBox="0 0 14 14"><path d="M3.5 1.4v11.2L12.6 7z"/></symbol>
+  <symbol id="sv-ridge" viewBox="0 0 1440 120"><path fill-opacity=".42" d="M0 120L0 74L70 66L120 70L180 58L240 64L300 50L350 56L410 44L470 52L520 46L580 56L640 42L700 48L760 34L820 40L880 16L940 36L1000 30L1060 46L1120 40L1180 54L1250 48L1310 60L1380 56L1440 64L1440 120Z"/><path d="M0 120L0 100L90 92L170 98L260 86L340 94L430 84L520 92L610 82L700 90L790 80L880 90L970 82L1060 92L1150 84L1240 94L1330 86L1440 94L1440 120ZM6 91L8 96L7 95L10 99L8 99L12 102L7 102L7 102L5 102L5 102L0 102L4 99L2 99L5 95L4 96ZM32 90L34 94L33 94L36 97L34 97L37 99L32 99L32 100L32 100L32 99L27 99L30 97L28 97L31 94L30 94ZM63 79L67 86L65 86L69 92L66 91L72 96L64 96L64 97L62 97L62 96L54 96L60 91L57 92L61 86L59 86ZM98 81L101 86L100 86L103 91L101 90L106 95L99 95L99 96L97 96L97 95L90 95L95 90L93 91L96 86L95 86ZM125 88L127 91L126 91L129 94L127 94L130 97L126 97L126 98L124 98L124 97L120 97L123 94L121 94L124 91L123 91ZM156 78L161 86L158 86L164 93L160 92L167 98L157 98L157 100L155 100L155 98L145 98L152 92L148 93L154 86L151 86ZM188 87L191 91L189 91L192 95L190 95L194 98L189 98L189 99L187 99L187 98L182 98L186 95L184 95L187 91L185 91ZM222 85L224 88L223 88L225 91L224 91L226 93L222 93L222 94L222 94L222 93L218 93L220 91L219 91L221 88L220 88ZM254 81L256 84L255 84L257 87L256 87L258 89L254 89L254 90L254 90L254 89L250 89L252 87L251 87L253 84L252 84ZM275 68L280 77L277 76L283 83L279 83L286 89L276 89L276 90L274 90L274 89L264 89L271 83L267 83L273 76L270 77ZM293 81L295 85L294 85L297 89L295 89L298 92L294 92L294 92L292 92L292 92L288 92L291 89L289 89L292 85L291 85ZM324 82L327 87L325 87L329 91L326 91L330 94L325 94L325 95L323 95L323 94L318 94L322 91L319 91L323 87L321 87ZM374 75L378 82L376 82L380 87L377 87L383 92L375 92L375 93L373 93L373 92L365 92L371 87L368 87L372 82L370 82ZM408 79L410 83L409 83L412 86L410 86L413 89L408 89L408 89L408 89L408 89L403 89L406 86L404 86L407 83L406 83ZM439 70L443 77L441 76L445 82L442 82L448 87L440 87L440 88L438 88L438 87L430 87L436 82L433 82L437 76L435 77ZM454 73L458 79L456 79L460 84L457 84L462 88L455 88L455 89L453 89L453 88L446 88L451 84L448 84L452 79L450 79ZM485 78L488 83L486 83L490 87L487 87L492 91L486 91L486 92L484 92L484 91L478 91L483 87L480 87L484 83L482 83ZM513 78L517 84L515 84L519 89L516 89L521 93L514 93L514 94L512 94L512 93L505 93L510 89L507 89L511 84L509 84ZM538 72L543 80L540 80L546 86L542 86L548 92L539 92L539 93L537 93L537 92L528 92L534 86L530 86L536 80L533 80ZM557 79L560 83L558 83L561 87L559 87L563 90L558 90L558 91L556 91L556 90L551 90L555 87L553 87L556 83L554 83ZM573 72L577 79L575 78L579 84L576 83L582 88L574 88L574 89L572 89L572 88L564 88L570 83L567 84L571 78L569 79ZM630 77L632 81L631 80L634 84L632 83L635 86L630 86L630 87L630 87L630 86L625 86L628 83L626 84L629 80L628 81ZM647 77L649 81L648 81L651 85L649 85L652 88L648 88L648 88L646 88L646 88L642 88L645 85L643 85L646 81L645 81ZM671 74L675 81L673 80L677 85L674 85L679 89L672 89L672 90L670 90L670 89L663 89L668 85L665 85L669 80L667 81ZM698 74L702 81L700 81L705 87L701 86L708 91L699 91L699 93L697 93L697 91L688 91L695 86L691 87L696 81L694 81ZM770 71L773 77L771 76L775 81L772 80L777 84L771 84L771 85L769 85L769 84L763 84L768 80L765 81L769 76L767 77ZM803 63L808 71L805 71L811 78L807 77L814 83L804 83L804 84L802 84L802 83L792 83L799 77L795 78L801 71L798 71ZM831 78L833 81L832 81L835 84L833 84L836 87L832 87L832 88L830 88L830 87L826 87L829 84L827 84L830 81L829 81ZM853 71L857 78L855 78L860 84L856 84L862 89L854 89L854 90L852 90L852 89L844 89L850 84L846 84L851 78L849 78ZM869 72L874 79L871 79L876 85L872 85L879 90L870 90L870 92L868 92L868 90L859 90L866 85L862 85L867 79L864 79ZM892 73L896 80L894 80L899 86L895 85L902 91L893 91L893 92L891 92L891 91L882 91L889 85L885 86L890 80L888 80ZM920 74L923 80L922 80L925 85L923 84L928 88L921 88L921 89L919 89L919 88L912 88L917 84L915 85L918 80L917 80ZM945 71L949 77L947 77L951 82L948 82L953 86L946 86L946 87L944 87L944 86L937 86L942 82L939 82L943 77L941 77ZM970 75L972 79L971 79L974 82L972 82L975 84L970 84L970 85L970 85L970 84L965 84L968 82L966 82L969 79L968 79ZM999 67L1004 75L1001 75L1007 82L1003 81L1010 87L1000 87L1000 88L998 88L998 87L988 87L995 81L991 82L997 75L994 75ZM1022 79L1025 83L1023 83L1026 87L1024 87L1028 90L1023 90L1023 91L1021 91L1021 90L1016 90L1020 87L1018 87L1021 83L1019 83ZM1048 72L1053 80L1050 80L1056 87L1052 86L1059 92L1049 92L1049 94L1047 94L1047 92L1037 92L1044 86L1040 87L1046 80L1043 80ZM1077 77L1081 84L1079 83L1083 88L1080 88L1085 92L1078 92L1078 93L1076 93L1076 92L1069 92L1074 88L1071 88L1075 83L1073 84ZM1103 80L1105 84L1104 84L1107 88L1105 87L1108 90L1104 90L1104 91L1102 91L1102 90L1098 90L1101 87L1099 88L1102 84L1101 84ZM1152 73L1155 79L1153 78L1157 83L1154 82L1159 86L1153 86L1153 87L1151 87L1151 86L1145 86L1150 82L1147 83L1151 78L1149 79ZM1196 81L1198 85L1197 85L1200 89L1198 88L1202 91L1197 91L1197 92L1195 92L1195 91L1190 91L1194 88L1192 89L1195 85L1194 85ZM1217 85L1219 89L1218 89L1220 92L1219 91L1222 94L1217 94L1217 94L1217 94L1217 94L1212 94L1215 91L1214 92L1216 89L1215 89ZM1265 86L1267 89L1266 89L1268 92L1267 92L1270 94L1265 94L1265 95L1265 95L1265 94L1260 94L1263 92L1262 92L1264 89L1263 89ZM1283 79L1286 84L1284 84L1288 89L1285 88L1290 92L1284 92L1284 93L1282 93L1282 92L1276 92L1281 88L1278 89L1282 84L1280 84ZM1316 79L1318 83L1317 83L1320 87L1318 87L1322 89L1317 89L1317 90L1315 90L1315 89L1310 89L1314 87L1312 87L1315 83L1314 83ZM1380 84L1382 87L1381 87L1383 90L1382 90L1384 92L1380 92L1380 93L1380 93L1380 92L1376 92L1378 90L1377 90L1379 87L1378 87ZM1439 82L1442 88L1440 87L1444 92L1442 92L1446 96L1440 96L1440 97L1438 97L1438 96L1432 96L1436 92L1434 92L1438 87L1436 88Z"/></symbol>
+  <symbol id="sv-firs" viewBox="0 0 1440 90"><path d="M0 90V80H1440V90ZM4 54L11 66L7 66L16 76L10 75L20 84L6 84L6 86L2 86L2 84L-12 84L-2 75L-8 76L1 66L-3 66ZM21 57L28 68L24 67L31 77L26 76L36 84L22 84L22 86L20 86L20 84L6 84L16 76L11 77L18 67L14 68ZM35 16L51 43L42 41L60 64L47 62L70 81L38 81L38 86L32 86L32 81L0 81L23 62L10 64L28 41L19 43ZM55 8L73 38L63 36L83 61L69 59L94 81L59 81L59 86L51 86L51 81L16 81L41 59L27 61L47 36L37 38ZM68 54L75 66L71 66L80 76L74 75L84 84L70 84L70 86L66 86L66 84L52 84L62 75L56 76L65 66L61 66ZM88 20L103 45L95 44L112 65L100 64L121 81L91 81L91 86L85 86L85 81L55 81L76 64L64 65L81 44L73 45ZM108 18L123 44L115 42L132 64L120 63L142 81L111 81L111 86L105 86L105 81L74 81L96 63L84 64L101 42L93 44ZM124 37L135 56L129 55L142 70L133 69L148 83L126 83L126 86L122 86L122 83L100 83L115 69L106 70L119 55L113 56ZM136 29L149 51L142 50L157 68L146 67L164 82L139 82L139 86L133 86L133 82L108 82L126 67L115 68L130 50L123 51ZM154 30L167 51L160 50L174 68L164 67L182 82L157 82L157 86L151 86L151 82L126 82L144 67L134 68L148 50L141 51ZM166 16L182 43L173 41L191 64L178 62L201 81L170 81L170 86L162 86L162 81L131 81L154 62L141 64L159 41L150 43ZM181 30L194 51L187 50L201 68L191 67L209 82L184 82L184 86L178 86L178 82L153 82L171 67L161 68L175 50L168 51ZM194 59L200 69L197 69L204 77L199 77L208 84L195 84L195 86L193 86L193 84L180 84L189 77L184 77L191 69L188 69ZM213 9L230 38L221 37L241 61L226 60L252 81L217 81L217 86L209 86L209 81L174 81L200 60L185 61L205 37L196 38ZM224 41L234 58L228 57L240 72L232 71L246 83L226 83L226 86L222 86L222 83L202 83L216 71L208 72L220 57L214 58ZM236 44L245 60L240 59L251 73L243 72L257 83L238 83L238 86L234 86L234 83L215 83L229 72L221 73L232 59L227 60ZM249 38L260 56L254 55L266 71L257 70L273 83L251 83L251 86L247 86L247 83L225 83L241 70L232 71L244 55L238 56ZM268 28L281 50L274 49L289 67L278 66L297 82L271 82L271 86L265 86L265 82L239 82L258 66L247 67L262 49L255 50ZM282 48L291 62L286 62L296 74L289 73L301 83L284 83L284 86L280 86L280 83L263 83L275 73L268 74L278 62L273 62ZM299 46L308 61L303 60L313 73L306 72L319 83L301 83L301 86L297 86L297 83L279 83L292 72L285 73L295 60L290 61ZM317 38L328 56L322 55L334 71L325 70L341 83L319 83L319 86L315 86L315 83L293 83L309 70L300 71L312 55L306 56ZM328 43L338 59L332 58L343 72L336 71L350 83L330 83L330 86L326 86L326 83L306 83L320 71L313 72L324 58L318 59ZM342 38L353 56L347 55L359 71L350 70L366 83L344 83L344 86L340 86L340 83L318 83L334 70L325 71L337 55L331 56ZM358 23L372 47L364 46L381 66L369 65L390 82L361 82L361 86L355 86L355 82L326 82L347 65L335 66L352 46L344 47ZM372 30L385 51L378 50L392 68L382 67L400 82L375 82L375 86L369 86L369 82L344 82L362 67L352 68L366 50L359 51ZM386 30L399 51L392 50L406 68L396 67L414 82L389 82L389 86L383 86L383 82L358 82L376 67L366 68L380 50L373 51ZM406 60L412 70L409 69L415 78L411 77L419 84L407 84L407 86L405 86L405 84L393 84L401 77L397 78L403 69L400 70ZM427 38L438 56L432 55L444 71L435 70L451 83L429 83L429 86L425 86L425 83L403 83L419 70L410 71L422 55L416 56ZM439 53L446 66L442 65L451 75L445 75L456 84L441 84L441 86L437 86L437 84L422 84L433 75L427 75L436 65L432 66ZM453 30L466 51L459 50L473 68L463 67L481 82L456 82L456 86L450 86L450 82L425 82L443 67L433 68L447 50L440 51ZM470 14L486 41L477 40L496 63L483 62L506 81L474 81L474 86L466 86L466 81L434 81L457 62L444 63L463 40L454 41ZM488 35L499 54L493 53L506 70L497 69L514 82L491 82L491 86L485 86L485 82L462 82L479 69L470 70L483 53L477 54ZM500 22L514 46L506 45L523 66L511 64L532 82L503 82L503 86L497 86L497 82L468 82L489 64L477 66L494 45L486 46ZM511 51L519 64L514 64L524 75L517 74L528 84L513 84L513 86L509 86L509 84L494 84L505 74L498 75L508 64L503 64ZM529 51L537 64L532 64L542 75L535 74L546 84L531 84L531 86L527 86L527 84L512 84L523 74L516 75L526 64L521 64ZM549 30L562 51L555 50L569 68L559 67L577 82L552 82L552 86L546 86L546 82L521 82L539 67L529 68L543 50L536 51ZM565 51L573 64L568 64L578 75L571 74L582 84L567 84L567 86L563 86L563 84L548 84L559 74L552 75L562 64L557 64ZM578 23L592 47L584 46L601 66L589 65L610 82L581 82L581 86L575 86L575 82L546 82L567 65L555 66L572 46L564 47ZM597 52L605 65L600 64L609 75L603 74L614 84L599 84L599 86L595 86L595 84L580 84L591 74L585 75L594 64L589 65ZM611 20L626 45L618 44L635 65L623 64L644 81L614 81L614 86L608 86L608 81L578 81L599 64L587 65L604 44L596 45ZM626 28L639 50L632 49L647 67L636 66L655 82L629 82L629 86L623 86L623 82L597 82L616 66L605 67L620 49L613 50ZM646 40L656 57L651 57L663 71L654 70L669 83L648 83L648 86L644 86L644 83L623 83L638 70L629 71L641 57L636 57ZM663 15L679 42L670 41L689 63L675 62L698 81L667 81L667 86L659 86L659 81L628 81L651 62L637 63L656 41L647 42ZM681 34L693 54L686 53L700 69L690 68L707 82L684 82L684 86L678 86L678 82L655 82L672 68L662 69L676 53L669 54ZM700 52L708 65L703 64L712 75L706 74L717 84L702 84L702 86L698 86L698 84L683 84L694 74L688 75L697 64L692 65ZM719 12L736 40L726 39L746 62L732 61L756 81L723 81L723 86L715 86L715 81L682 81L706 61L692 62L712 39L702 40ZM732 60L738 70L735 69L741 78L737 77L745 84L733 84L733 86L731 86L731 84L719 84L727 77L723 78L729 69L726 70ZM745 23L759 47L751 46L768 66L756 65L776 82L748 82L748 86L742 86L742 82L714 82L734 65L722 66L739 46L731 47ZM764 57L771 68L767 67L774 77L769 76L778 84L765 84L765 86L763 86L763 84L750 84L759 76L754 77L761 67L757 68ZM783 30L796 51L789 50L803 68L793 67L811 82L786 82L786 86L780 86L780 82L755 82L773 67L763 68L777 50L770 51ZM795 57L802 68L798 67L805 77L800 76L810 84L796 84L796 86L794 86L794 84L780 84L790 76L785 77L792 67L788 68ZM810 58L816 69L813 68L820 77L815 76L824 84L811 84L811 86L809 86L809 84L796 84L805 76L800 77L807 68L804 69ZM829 32L841 53L834 51L848 69L838 68L856 82L832 82L832 86L826 86L826 82L802 82L820 68L810 69L824 51L817 53ZM841 32L853 53L846 51L860 69L850 68L868 82L844 82L844 86L838 86L838 82L814 82L832 68L822 69L836 51L829 53ZM860 28L873 50L866 49L881 67L870 66L889 82L863 82L863 86L857 86L857 82L831 82L850 66L839 67L854 49L847 50ZM875 32L887 53L880 51L894 69L884 68L902 82L878 82L878 86L872 86L872 82L848 82L866 68L856 69L870 51L863 53ZM893 28L906 50L899 49L914 67L903 66L922 82L896 82L896 86L890 86L890 82L864 82L883 66L872 67L887 49L880 50ZM912 44L921 60L916 59L927 73L919 72L933 83L914 83L914 86L910 86L910 83L891 83L905 72L897 73L908 59L903 60ZM926 23L940 47L932 46L949 66L937 65L958 82L929 82L929 86L923 86L923 82L894 82L915 65L903 66L920 46L912 47ZM943 32L955 53L948 51L962 69L952 68L970 82L946 82L946 86L940 86L940 82L916 82L934 68L924 69L938 51L931 53ZM964 45L973 61L968 60L979 73L971 72L984 83L966 83L966 86L962 86L962 83L944 83L957 72L949 73L960 60L955 61ZM978 41L988 58L982 57L994 72L986 71L1000 83L980 83L980 86L976 86L976 83L956 83L970 71L962 72L974 57L968 58ZM991 22L1005 46L997 45L1014 66L1002 64L1023 82L994 82L994 86L988 86L988 82L959 82L980 64L968 66L985 45L977 46ZM1009 46L1018 61L1013 60L1023 73L1016 72L1029 83L1011 83L1011 86L1007 86L1007 83L989 83L1002 72L995 73L1005 60L1000 61ZM1021 35L1032 54L1026 53L1039 70L1030 69L1046 82L1024 82L1024 86L1018 86L1018 82L996 82L1012 69L1003 70L1016 53L1010 54ZM1034 13L1050 41L1041 39L1060 63L1047 61L1070 81L1038 81L1038 86L1030 86L1030 81L998 81L1021 61L1008 63L1027 39L1018 41ZM1053 35L1064 54L1058 53L1071 70L1062 69L1078 82L1056 82L1056 86L1050 86L1050 82L1028 82L1044 69L1035 70L1048 53L1042 54ZM1067 38L1078 56L1072 55L1084 71L1075 70L1091 83L1069 83L1069 86L1065 86L1065 83L1043 83L1059 70L1050 71L1062 55L1056 56ZM1083 59L1089 69L1086 69L1093 77L1088 77L1096 84L1084 84L1084 86L1082 86L1082 84L1070 84L1078 77L1073 77L1080 69L1077 69ZM1101 32L1113 53L1106 51L1120 69L1110 68L1128 82L1104 82L1104 86L1098 86L1098 82L1074 82L1092 68L1082 69L1096 51L1089 53ZM1118 39L1129 57L1123 56L1135 71L1126 70L1142 83L1120 83L1120 86L1116 86L1116 83L1094 83L1110 70L1101 71L1113 56L1107 57ZM1133 28L1146 50L1139 49L1154 67L1143 66L1162 82L1136 82L1136 86L1130 86L1130 82L1104 82L1123 66L1112 67L1127 49L1120 50ZM1145 46L1154 61L1149 60L1159 73L1152 72L1165 83L1147 83L1147 86L1143 86L1143 83L1125 83L1138 72L1131 73L1141 60L1136 61ZM1157 55L1164 67L1160 66L1168 76L1162 75L1172 84L1159 84L1159 86L1155 86L1155 84L1142 84L1152 75L1146 76L1154 66L1150 67ZM1168 49L1176 63L1172 62L1181 74L1174 73L1186 83L1170 83L1170 86L1166 86L1166 83L1150 83L1162 73L1155 74L1164 62L1160 63ZM1181 33L1193 53L1186 52L1200 69L1190 68L1208 82L1184 82L1184 86L1178 86L1178 82L1154 82L1172 68L1162 69L1176 52L1169 53ZM1202 44L1211 60L1206 59L1217 73L1209 72L1223 83L1204 83L1204 86L1200 86L1200 83L1181 83L1195 72L1187 73L1198 59L1193 60ZM1221 28L1234 50L1227 49L1242 67L1231 66L1250 82L1224 82L1224 86L1218 86L1218 82L1192 82L1211 66L1200 67L1215 49L1208 50ZM1237 55L1244 67L1240 66L1248 76L1242 75L1252 84L1239 84L1239 86L1235 86L1235 84L1222 84L1232 75L1226 76L1234 66L1230 67ZM1250 33L1262 53L1255 52L1269 69L1259 68L1276 82L1253 82L1253 86L1247 86L1247 82L1224 82L1241 68L1231 69L1245 52L1238 53ZM1265 59L1271 69L1268 69L1275 77L1270 77L1278 84L1266 84L1266 86L1264 86L1264 84L1252 84L1260 77L1255 77L1262 69L1259 69ZM1280 55L1287 67L1283 66L1291 76L1285 75L1296 84L1282 84L1282 86L1278 86L1278 84L1264 84L1275 75L1269 76L1277 66L1273 67ZM1294 56L1301 67L1297 67L1305 76L1299 76L1309 84L1296 84L1296 86L1292 86L1292 84L1279 84L1289 76L1283 76L1291 67L1287 67ZM1306 9L1323 38L1314 37L1334 61L1319 60L1344 81L1310 81L1310 86L1302 86L1302 81L1268 81L1293 60L1278 61L1298 37L1289 38ZM1323 43L1333 59L1327 58L1338 72L1331 71L1344 83L1325 83L1325 86L1321 86L1321 83L1302 83L1315 71L1308 72L1319 58L1313 59ZM1334 45L1343 61L1338 60L1349 73L1341 72L1354 83L1336 83L1336 86L1332 86L1332 83L1314 83L1327 72L1319 73L1330 60L1325 61ZM1347 20L1362 45L1354 44L1371 65L1359 64L1380 81L1350 81L1350 86L1344 86L1344 81L1314 81L1335 64L1323 65L1340 44L1332 45ZM1362 41L1372 58L1366 57L1378 72L1370 71L1384 83L1364 83L1364 86L1360 86L1360 83L1340 83L1354 71L1346 72L1358 57L1352 58ZM1376 42L1386 59L1380 58L1392 72L1384 71L1398 83L1378 83L1378 86L1374 86L1374 83L1354 83L1368 71L1360 72L1372 58L1366 59ZM1397 49L1405 63L1401 62L1410 74L1403 73L1416 83L1399 83L1399 86L1395 86L1395 83L1378 83L1391 73L1384 74L1393 62L1389 63ZM1408 26L1422 49L1414 48L1430 67L1418 66L1438 82L1411 82L1411 86L1405 86L1405 82L1378 82L1398 66L1386 67L1402 48L1394 49ZM1427 48L1436 62L1431 62L1441 74L1434 73L1446 83L1429 83L1429 86L1425 86L1425 83L1408 83L1420 73L1413 74L1423 62L1418 62ZM1441 13L1457 41L1448 39L1467 63L1454 61L1478 81L1445 81L1445 86L1437 86L1437 81L1404 81L1428 61L1415 63L1434 39L1425 41Z"/></symbol>
 </svg>
 
 <div class="proto" role="note">Прототип сайту для <b>«Садиба Гереджука»</b></div>
@@ -749,12 +790,15 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
   </div>
 </section>
 
-<section class="section intro" id="about" aria-labelledby="about-title">
+<section class="section intro has-edge" id="about" aria-labelledby="about-title">
   <div class="wrap intro__grid">
-    <figure class="intro__ph" data-rv>
-      <img src="img/hero.jpg" width="1200" height="800" alt="Два дерев’яні будинки садиби з зеленими дахами, альтанка і ялинка, за ними зелений гірський схил і хмари" loading="lazy" decoding="async">
-      <figcaption>Садиба навесні</figcaption>
-    </figure>
+    <div class="intro__phw" data-rv>
+      <figure class="intro__ph">
+        <img src="img/hero.jpg" width="1200" height="800" alt="Два дерев’яні будинки садиби з зеленими дахами, альтанка і ялинка, за ними зелений гірський схил і хмари" loading="lazy" decoding="async">
+        <figcaption>Садиба навесні</figcaption>
+      </figure>
+      <img class="decor decor--cone" src="decor/cone-top.webp" width="400" height="431" alt="" aria-hidden="true" loading="lazy" decoding="async">
+    </div>
     <div data-rv>
       <p class="eyebrow">Про садибу</p>
       <h2 id="about-title">Дерев’яні будинки <em>біля Пруту</em></h2>
@@ -773,9 +817,11 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       <p class="intro__note">Відповідає господиня, Марічка. Ціну на ваші дати підтвердимо у Viber.</p>
     </div>
   </div>
+  <svg class="edge edge--mist" viewBox="0 0 1440 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><use href="#sv-ridge"/></svg>
 </section>
 
-<section class="section rooms" id="rooms" aria-labelledby="rooms-title">
+<section class="section rooms has-edge" id="rooms" aria-labelledby="rooms-title">
+  <img class="decor decor--hang" src="decor/sprig-cone.webp" width="420" height="417" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <div class="wrap">
     <div class="head" data-rv>
       <p class="eyebrow">Номери і будинок</p>
@@ -898,9 +944,10 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       <p><svg class="i" aria-hidden="true"><use href="#i-wifi"/></svg><span>Wi-Fi і паркування на подвір’ї безкоштовні.</span></p>
     </div>
   </div>
+  <svg class="edge edge--spruce" viewBox="0 0 1440 90" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><use href="#sv-firs"/></svg>
 </section>
 
-<section class="section tone-dark yard" id="yard" aria-labelledby="yard-title">
+<section class="section tone-dark yard has-edge" id="yard" aria-labelledby="yard-title">
   <div class="wrap">
     <div class="split" data-rv>
       <div>
@@ -929,17 +976,20 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       </blockquote>
     </div>
   </div>
+  <img class="decor decor--ground" src="decor/cone-angle.webp" width="400" height="224" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <img class="decor decor--ground2" src="decor/cone-side.webp" width="400" height="182" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <svg class="edge edge--mist" viewBox="0 0 1440 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><use href="#sv-ridge"/></svg>
 </section>
 
-<section class="section mountains" id="mountains" aria-labelledby="mnt-title">
+<section class="section mountains has-edge" id="mountains" aria-labelledby="mnt-title">
   <div class="wrap">
     <figure class="peaks__fig" data-rv>
-      <img src="img/peaks.jpg" width="1200" height="900" alt="Засніжені вершини, освітлені сонцем на світанку, внизу село і дорога" loading="lazy" decoding="async">
+      <img src="img/hoverla-1600.webp" srcset="img/hoverla-900.webp 900w, img/hoverla-1600.webp 1600w" sizes="(max-width: 1240px) 100vw, 1160px" width="1600" height="1200" alt="Говерла: зелена вершина-піраміда і полонина під хмарним небом" loading="lazy" decoding="async">
       <div class="peaks__txt">
         <p class="eyebrow">Гори поруч</p>
         <h2 id="mnt-title">Звідси зручно <em>вибиратися на Говерлу</em></h2>
       </div>
-      <figcaption>Гори на світанку. Фото господарів.</figcaption>
+      <figcaption>Говерла. Фото: <a href="https://unsplash.com/photos/green-mountain-under-white-clouds-during-daytime-YKySFzQyV_U" target="_blank" rel="noopener">Mykhailo Albaiev</a>, Unsplash</figcaption>
     </figure>
     <div class="peaks__grid">
       <div data-rv>
@@ -957,6 +1007,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       </blockquote>
     </div>
   </div>
+  <svg class="edge edge--meadow" viewBox="0 0 1440 90" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><use href="#sv-firs"/></svg>
 </section>
 
 <section class="section tone-meadow gallery" id="gallery" aria-labelledby="gal-title">
@@ -980,7 +1031,8 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
   </div>
 </section>
 
-<section class="section reviews" id="reviews" aria-labelledby="rev-title">
+<section class="section reviews has-edge" id="reviews" aria-labelledby="rev-title">
+  <img class="decor decor--bird" src="decor/kosiv-bird.webp" width="320" height="244" alt="" aria-hidden="true" loading="lazy" decoding="async">
   <div class="wrap">
     <div class="head" data-rv>
       <p class="eyebrow">Відгуки</p>
@@ -1022,9 +1074,10 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
     </div>
     <p class="reviews__fine">Цитати наведено дослівно, деякі скорочено. Оцінка станом на 30.09.2026.</p>
   </div>
+  <svg class="edge edge--spruce" viewBox="0 0 1440 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><use href="#sv-ridge"/></svg>
 </section>
 
-<section class="section tone-dark reserve" id="bron" aria-labelledby="book-title">
+<section class="section tone-dark reserve has-edge" id="bron" aria-labelledby="book-title">
   <div class="wrap reserve__grid">
     <div data-rv>
       <p class="eyebrow">Бронювання напряму</p>
@@ -1120,6 +1173,8 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       </div>
     </div>
   </div>
+  <img class="decor decor--rest" src="decor/cone-side.webp" width="400" height="182" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <svg class="edge edge--mist" viewBox="0 0 1440 90" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><use href="#sv-firs"/></svg>
 </section>
 
 <section class="section route" id="route" aria-labelledby="route-title">
@@ -1145,6 +1200,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       </ul>
     </div>
     <div class="way" data-rv>
+      <img class="decor decor--sprig" src="decor/sprig.webp" width="380" height="498" alt="" aria-hidden="true" loading="lazy" decoding="async">
       <h3><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Машиною</h3>
       <ol class="way__steps">
         <li><span>Від Івано-Франківська трасою Н-09 у бік Рахова.</span></li>
@@ -1162,7 +1218,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
   </div>
 </section>
 
-<section class="section tone-meadow faq-sec" id="faq" aria-labelledby="faq-title">
+<section class="section tone-meadow faq-sec has-edge" id="faq" aria-labelledby="faq-title">
   <div class="wrap faq__grid">
     <div class="head" data-rv>
       <p class="eyebrow">Питання</p>
@@ -1174,6 +1230,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
           <a class="btn btn--ghost" href="https://t.me/+380977886545" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg>Telegram</a>
         </div>
       </div>
+      <img class="faq__cone" src="decor/cone-angle.webp" width="400" height="224" alt="" aria-hidden="true" loading="lazy" decoding="async">
     </div>
     <div class="faq" data-rv>
       <details>
@@ -1214,6 +1271,7 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       </details>
     </div>
   </div>
+  <svg class="edge edge--night" viewBox="0 0 1440 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"><use href="#sv-ridge"/></svg>
 </section>
 
 </main>
@@ -1245,7 +1303,8 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
       </div>
     </div>
     <div class="foot__credits">
-      <p>Фото: Google-картка садиби і відкриті сторінки садиби в інтернеті.</p>
+      <p>Фото садиби: Google-картка садиби і відкриті сторінки садиби в інтернеті.</p>
+      <p>Фото Говерли: Mykhailo Albaiev, <a href="https://unsplash.com/photos/green-mountain-under-white-clouds-during-daytime-YKySFzQyV_U" target="_blank" rel="noopener">Unsplash</a>, ліцензія Unsplash.</p>
       <p>Оцінка й цитати: Google Maps і відгуки гостей, станом на 30.09.2026.</p>
       <p>Прототип сайту, зібраний за відкритими даними. Це не офіційний сайт садиби.</p>
     </div>
