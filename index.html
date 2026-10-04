@@ -23,8 +23,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="hero-karpaty/poster_full_1280x720.jpg" media="(min-width: 761px)" fetchpriority="high">
-<link rel="preload" as="image" href="hero-karpaty/poster_full_mobile_750x990.jpg" media="(max-width: 760px)" fetchpriority="high">
+<link rel="preload" as="image" href="hero-karpaty/poster_nofood_1280x720.jpg" media="(min-width: 761px)" fetchpriority="high">
+<link rel="preload" as="image" href="hero-karpaty/poster_nofood_mobile_750x990.jpg" media="(max-width: 760px)" fetchpriority="high">
 <script>document.documentElement.classList.add('js');</script>
 <script type="application/ld+json">
 {
@@ -763,8 +763,8 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
 <section class="hero" id="top" aria-labelledby="hero-title">
   <div class="band" id="band">
     <picture class="band__poster" aria-hidden="true">
-      <source media="(max-width: 760px)" srcset="hero-karpaty/poster_full_mobile_750x990.jpg" width="750" height="990">
-      <img src="hero-karpaty/poster_full_1280x720.jpg" width="1280" height="720" alt="" fetchpriority="high" decoding="async">
+      <source media="(max-width: 760px)" srcset="hero-karpaty/poster_nofood_mobile_750x990.jpg" width="750" height="990">
+      <img src="hero-karpaty/poster_nofood_1280x720.jpg" width="1280" height="720" alt="" fetchpriority="high" decoding="async">
     </picture>
     <video class="band__video" id="bandVideo" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
     <div class="band__scrim" aria-hidden="true"></div>
@@ -1504,8 +1504,8 @@ textarea.inp{height:auto;min-height:92px;padding:13px 14px;line-height:1.45;resi
     var mob = window.matchMedia('(max-width: 760px)');
     var ctl = ambient(v, function(){
       return mob.matches
-        ? { src: 'hero-karpaty/hero_full_mobile_750x990.mp4', poster: 'hero-karpaty/poster_full_mobile_750x990.jpg' }
-        : { src: 'hero-karpaty/hero_full_1280x720.mp4', poster: 'hero-karpaty/poster_full_1280x720.jpg' };
+        ? { src: 'hero-karpaty/hero_nofood_mobile_750x990.mp4', poster: 'hero-karpaty/poster_nofood_mobile_750x990.jpg' }
+        : { src: 'hero-karpaty/hero_nofood_1280x720.mp4', poster: 'hero-karpaty/poster_nofood_1280x720.jpg' };
     }, {
       mq: mob, watch: box, eager: true,
       onPlaying: function(){ box.classList.add('is-playing'); btn.hidden = false; },
